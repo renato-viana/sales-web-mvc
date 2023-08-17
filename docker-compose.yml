@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: sales_postgres
+    environment:
+      POSTGRES_DB: sales_db
+      POSTGRES_USER: rviana
+      POSTGRES_PASSWORD: senha123
+    ports:
+      - "5432:5432"
+    volumes:
+      - sales_postgres_data:/var/lib/postgresql/data
+    networks:
+      - sales_network
+
+volumes:
+  sales_postgres_data:
+    name: sales_postgres_data
+
+networks:
+  sales_network:
+    name: sales_network
+    driver: bridge
