@@ -8,8 +8,16 @@ builder.MigrationsAssembly("SalesWebMvc")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<SeedingService>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var seedingService = services.GetRequiredService<SeedingService>(); // Obtém o SeedingService do contêiner
+    seedingService.Seed(); // Executa a operação de seeding
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
